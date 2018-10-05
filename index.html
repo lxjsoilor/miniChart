@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./hcChart.js"></script>
+    <style>
+        body {
+            height: 100vh;
+        }
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        .cvs-box {
+            height: 600px;
+            width: 100vw;
+            /* overflow: hidden; */
+        }
+        .cvs-box canvas {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            margin: auto;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body >
+    <!-- <canvas  id="myCanvas" style="background: #fff; width: 100%; height: 600px;">当前浏览器不支持canvas，请更换最新的浏览器使用！</canvas> -->
+    <div class="cvs-box" id="box">
+        <canvas id="myCanvas" style="background: #fff; height: 100%; width: 100%;">当前浏览器不支持canvas，请更换最新的浏览器使用！</canvas>
+    </div>
+</body>
+<script>
+    var data = [{
+        name: '1邮件营销22',
+        data: 9
+    },
+    {
+        name: '9天原件',
+        data: 6
+    },
+    {
+        name: '1邮件营销2344',
+        data: 2
+    },
+    {
+        name: '9天原件',
+        data: 8
+    },
+    {
+        name: '1邮件营销',
+        data: 5
+    },
+    {
+        name: '9天原件',
+        data: 3
+    },
+    {
+        name: '1邮件营销',
+        data: 0
+    },
+    {
+        name: '9天原件',
+        data: 10
+    }]
+	new HcChart({
+		dom: document.getElementById("myCanvas"),
+        xAxis: data,
+        turnImg: function (imgSrc) {
+            document.getElementById("myCanvas").style.width = 'auto'
+            document.getElementById("myCanvas").style.height = 'auto'
+            document.getElementById("myCanvas").style.visibility = 'visible'
+        },
+	});
+
+    document.getElementById('myCanvas').onclick = function () {
+        location.replace('./indexRotate.html')
+    }
+</script>
+</html>
