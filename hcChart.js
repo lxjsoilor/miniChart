@@ -266,7 +266,6 @@ HcChartProto.drawGraph = function(){
     var ctx = this.ctx;
     var cs = this.cs;
     var series = this.series;
-    console.log(this.xAxis)
     var csXOneLen = cs.csXOneLen;
     var csLeft = cs.csLeft;
     var csLeft = cs.csLeft + 10;
@@ -306,8 +305,9 @@ HcChartProto.drawCutLine = function() {
     var disTop = 24
     var index = 0
     if (!!this.opts.rotate) {
+        
         for (var i = 0; i < arr.length; i++) {
-            console.log(arr[i].name)
+            arr[i].name = this.cutTextLength(arr[i].name)
             if(i % 3 == 0) {
                 ctx.beginPath();
                 ctx.fillStyle = HcChartDefault.colors[i][0]
@@ -334,7 +334,7 @@ HcChartProto.drawCutLine = function() {
         }
     }else {
         for (var i = 0; i < arr.length; i++) {
-            console.log(arr[i].name)
+            arr[i].name = this.cutTextLength(arr[i].name)
             if(i % 2 == 0) {
                 ctx.beginPath();
                 ctx.fillStyle = HcChartDefault.colors[i][0]
@@ -354,16 +354,35 @@ HcChartProto.drawCutLine = function() {
         }
     }
 
-
     
     this.convertCanvasToImage(ctx.canvas)
 } 
+HcChartProto.cutTextLength = function(txt, omit) {
+    var ctx = this.ctx;
+    var txtWidth = ctx.measureText(txt).width
+    if(!!this.opts.rotate) {
+        var maxWidth = (ctx.canvas.width / 10 ) * 2
+    }else {
+        var maxWidth = (ctx.canvas.width / 6 ) * 2
+    }
+    if(txtWidth > maxWidth) {
+        var tempArr = txt.split('')
+        tempArr.splice(-1, 1)
+        txt = tempArr.join('')
+        return this.cutTextLength(txt, true)
+    }else {
+        if(!!omit) {
+            return txt + '...'
+        }else {
+            return txt
+        }
+    }
+}
 // 转化成图片
 HcChartProto.convertCanvasToImage = function(canvas) {
 	var image = new Image();
     image.src = canvas.toDataURL("image/png");
-    // console.log(image)
-    this.opts.turnImg(image)
+    this.opts.callBack(image)
 	return image;
 }
 
